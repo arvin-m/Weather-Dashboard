@@ -23,6 +23,8 @@
   <!-- JQuery -->
   <script src="http://code.jquery.com/jquery-3.4.1.min.js"
     integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- link moment.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
 
   <!-- Css File -->
   <link rel="stylesheet" href="style.css" />
@@ -53,78 +55,86 @@
       </div>
       <div id="errorMessage" class="alert alert-danger" role="alert" style="display:none;"></div>
 
-
-
       <div class="card" style="width: 18rem;">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item" id="austin"Austin</li>
-          <li class="list-group-item" id="Chicago">Chicago</li>
-          <li class="list-group-item" id="newYork">New York</li>
-          <li class="list-group-item" id="orlando">Orlando</li>
-          <li class="list-group-item" id="sanFran">San FranCisco</li>
-          <li class="list-group-item" id="seatt">Seattle</li>
-          <li class="list-group-item" id="denver">Denver</li>
-          <li class="list-group-item" id="atlanta">Atlanta</li>
+          <li class="list-group-item cityList" id="austin">Austin</li>
+          <li class="list-group-item cityList" id="chicago">Chicago</li>
+          <li class="list-group-item cityList" id="newyork">New York</li>
+          <li class="list-group-item cityList" id="orlando">Orlando</li>
+          <li class="list-group-item cityList" id="sanfrancisco">San FranCisco</li>
+          <li class="list-group-item cityList" id="seattle">Seattle</li>
+          <li class="list-group-item cityList" id="denver">Denver</li>
+          <li class="list-group-item cityList" id="atlanta">Atlanta</li>
         </ul>
       </div>
     </div>
 
+    <!-- first container loaded in the page -->
+    <div class="container-sm" id="currentWeatherBox">
+      <div class=" col-sm-10 card rounded" >
+        <h4 class=" card-title cityName">
+        </h4>
+        <p class="card-title weather"></p>
+        <p class="card-text tempature"></p>
+        <p class="card-text humidity"></p>
+        <p class="card-text wind"></p>
+        <p class="card-text uvIndex"></p>
+      </div>
+    </div>
     <!--  result section - right side -->
-    <div class=" container" id="result-box">
-     
+
+    <div class=" container" id="result-box" >
 
 
-        <div class=" col-sm-10 card rounded">
-          <h4 class=" card-title cityName">
-      </h4>
-      <p class="card-title weather"></p>
-      <p class="card-text tempature"></p>
-      <p class="card-text humidity"></p>
-      <p class="card-text wind"></p>
-      <p class="card-text uvIndex"></p>
+
+      <div class=" col-sm-10 card rounded" >
+        <h4 class=" card-title cityName">
+        </h4>
+        <p class="card-title weather"></p>
+        <p class="card-text tempature"></p>
+        <p class="card-text humidity"></p>
+        <p class="card-text wind"></p>
+        <p class="card-text uvIndex"></p>
+      </div>
+      <!-- 5-day Forecast -->
+
+      <div class="col-sm-10 card rounded list-group list-group-horizontal-lg" >
+
+        <div class="col-sm-2 card-body rounded smallCards">
+          <h6 class="card-title" id="date1">Card title</h6>
+          <div class="card-title" id="iconD1"></div>
+          <p class="card-text" id="tempD1"></p>
+          <p class="card-text" id="humD1"></p>
+        </div>
+        <div class="col-sm-2 card-body rounded smallCards">
+          <h6 class="card-title" id="date2">Card title</h6>
+          <div class="card-title" id="iconD2"></div>
+          <p class="card-text" id="tempD2"></p>
+          <p class="card-text" id="humD2"></p>
+        </div>
+        <div class="col-sm-2 card-body rounded smallCards">
+          <h6 class="card-title" id="date3">Card title</h6>
+          <div class="card-title" id="iconD3"></div>
+          <p class="card-text" id="tempD3"></p>
+          <p class="card-text" id="humD3"></p>
+        </div>
+        <div class="col-sm-2 card-body rounded smallCards">
+          <h6 class="card-title" id="date4">Card title</h6>
+          <div class="card-title" id="iconD4"></div>
+          <p class="card-text" id="tempD4"></p>
+          <p class="card-text" id="humD4"></p>
+        </div>
+        <div class="col-sm-2 card-body rounded smallCards">
+          <h6 class="card-title" id="date5">Card title</h6>
+          <div class="card-title" id="iconD5"></div>
+          <p class="card-text" id="tempD5"></p>
+          <p class="card-text" id="humD5"></p>
+        </div>
+      </div>
+
+
     </div>
-    <!-- 5-day Forecast -->
-
-    <div class="col-sm-10 card rounded list-group list-group-horizontal-lg">
-
-      <div class="col-sm-2 card-body rounded smallCards">
-        <h6 class="card-title" id="date1">Card title</h6>
-        <p class="card-text" id="tempD1"></p>
-        <p class="card-text" id="humD1"></p>
-      </div>
-      <div class="col-sm-2 card-body rounded smallCards">
-        <h5 class="card-title" id="date2">Card title</h5>
-        <p class="card-text" id="tempD2"></p>
-        <p class="card-text" id="humD2"></p>
-      </div>
-      <div class="col-sm-2 card-body rounded smallCards">
-        <h5 class="card-title" id="date3">Card title</h5>
-        <p class="card-text" id="tempD3"></p>
-        <p class="card-text" id="humD3"></p>
-      </div>
-      <div class="col-sm-2 card-body rounded smallCards">
-        <h5 class="card-title" id="date4">Card title</h5>
-        <p class="card-text" id="tempD4"></p>
-        <p class="card-text" id="humD4"></p>
-      </div>
-      <div class="col-sm-2 card-body rounded smallCards">
-        <h5 class="card-title" id="date5">Card title</h5>
-        <p class="card-text" id="tempD5"></p>
-        <p class="card-text" id="humD5"></p>
-      </div>
-    </div>
-
-
   </div>
-  </div>
-
-
-
-
-
-
-
-
 </body>
 
 </html>
