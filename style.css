@@ -15,7 +15,15 @@
 p{
     color:#5f6768;
 }
-li{
+li:hover{
+    
+    background-color: gray;
+    color: whitesmoke;
+
+}
+li:active{
+    background-color: rgb(29, 128, 171);
+    color: rgb(196, 204, 209);
 
 }
 h4{

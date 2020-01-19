@@ -20,7 +20,7 @@ var longitude = 0;
 // check if the browser support the getlocation API
 function supportRequest() {
   if (navigator.getLocation) {
-    
+
 
     navigator.geolocation.getCurrentPosition(getPosition);
   } else {
@@ -29,54 +29,67 @@ function supportRequest() {
 }
 
 function getPosition(success) {
-  console.log(' getposition function')
+  
 
   latitude = success.coords.latitude;
   longitude = success.coords.longitude;
-  console.log('right after update', latitude, longitude)
+  
 
-  console.log(success);
+  
 
   weather()
-  
+
 
 
 }
 navigator.geolocation.getCurrentPosition(getPosition);
 
-
+// current location API call
 
 function weather() {
-  console.log('weather function user location', latitude, longitude)
-  $("#currentWeatherBox").attr("style", "display:block");
   
-
-
-  var urlBase = "https://api.openweathermap.org/data/2.5/weather?appid=b650042e3a82aa70290734a60a8cb3e3&lat=" + latitude + "&lon=" + longitude + "&units=imperial";
+  $("#currentWeatherBox").attr("style", "display:block");
 
 
 
-  console.log(urlBase);
+  var CurrentUrlBase = "https://api.openweathermap.org/data/2.5/weather?appid=b650042e3a82aa70290734a60a8cb3e3&lat=" + latitude + "&lon=" + longitude + "&units=imperial";
+
+
+
+ 
 
   $.ajax({
-    url: urlBase,
+    url: CurrentUrlBase,
     type: "GET",
 
     success: function (wetherInfo) {
-      console.log(wetherInfo);
+     
       $(".cityName").html("Location: " + wetherInfo.name + `<img src='http://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
       $(".weather").html(" Description : " + wetherInfo.weather[0].description);
       $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
       $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
       $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
-      $(".uvIndex").html("UVIndex: ");
+      
 
 
 
     }
   });
+  
 
+     
+   // UVIndex Call
+   $.ajax({
+    url:"http://api.openweathermap.org/data/2.5/uvi?appid=b650042e3a82aa70290734a60a8cb3e3&lat="+latitude+"&lon="+longitude,
+    type:"GET",
+    success :function(uvIndexInfo){
+      
+      $(".uvIndex").html("UVIndex: "+uvIndexInfo.value);
 
+      
+
+    }
+  })
 
 
 
@@ -85,6 +98,8 @@ function weather() {
     $("#currentWeatherBox").attr("style", "display:none");
     $("#result-box").attr("style", "display:block");
     
+    
+
 
     var cityName = $(this).text();
 
@@ -99,13 +114,15 @@ function weather() {
         $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
         $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
         $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
-        $(".uvIndex").html("UVIndex: ");
+        $(".uvIndex").html("UVIndex: "+uvIndexInfo.value);
 
 
 
 
       }
     });
+
+        
     // 5 day forcast ajax call
     $.ajax({
       url: urlForcaste + cityName + tempFah,
@@ -121,10 +138,10 @@ function weather() {
         $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
 
         // Day two
-        $("#date2").html(forecastInfo.list[7].dt_txt.slice(0, 10));
-        $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
-        $("#tempD2").html("Tempature: " + forecastInfo.list[7].main.temp + "&#8457");
-        $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[7].main.humidity) + "%");
+        $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
+        $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
+        $("#tempD2").html("Tempature: " + forecastInfo.list[8].main.temp + "&#8457");
+        $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
 
         // day three
         $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
@@ -179,7 +196,9 @@ function weather() {
 
       $("#currentWeatherBox").attr("style", "display:none");
       $("#result-box").attr("style", "display:block");
+
       
+
 
 
       $.ajax({
@@ -192,15 +211,16 @@ function weather() {
           $(".weather").html(" Description : " + wetherInfo.weather[0].description);
           $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
           $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
-          // becuse speed object has number in it we need to convert that with JSON.stringfy to string
           $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
-          $(".uvIndex").html("UVIndex: ");
+          
 
 
 
 
         }
       });
+
+     
 
       // 5 day forcast ajax call
       $.ajax({
@@ -217,10 +237,10 @@ function weather() {
           $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
 
           // Day two
-          $("#date2").html(forecastInfo.list[7].dt_txt.slice(0, 10));
-          $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
-          $("#tempD2").html("Tempature: " + forecastInfo.list[7].main.temp + "&#8457");
-          $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[7].main.humidity) + "%");
+          $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
+          $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
+          $("#tempD2").html("Tempature: " + forecastInfo.list[8].main.temp + "&#8457");
+          $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
 
           // day three
           $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
@@ -261,6 +281,7 @@ function weather() {
 
 
 
-  });}
+  });
+}
 
 
