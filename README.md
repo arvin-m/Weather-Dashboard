@@ -12,9 +12,9 @@
 
 
  ## Picture of application
- ![GitHub Logo](img/FirstLOadPage.PNG) 
+ ![First look app picture](img/FirstLOadPage.PNG) 
 
- ![GitHub Logo](img\ResultByCity.PNG) 
+ ![Result app picture](img/ResultByCity.PNG) 
 
  
 
