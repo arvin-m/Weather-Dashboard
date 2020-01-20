@@ -114,7 +114,7 @@ function weather() {
         $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
         $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
         $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
-        $(".uvIndex").html("UVIndex: "+uvIndexInfo.value);
+        
 
 
 
@@ -183,13 +183,13 @@ function weather() {
     // hiding the error box when the page load at the second time
     $("#errorMessage").attr("style", "display:none");
 
-    var oldList = JSON.parse(localStorage.getItem('cityList'))
-    console.log('this is the old list!', oldList)
+    // var oldList = JSON.parse(localStorage.getItem('cityList'))
+    // console.log('this is the old list!', oldList)
     var userInput = input.val();
-    var cityArray = oldList.concat([userInput])
-    var cityStrArray = JSON.stringify(cityArray)
-    console.log('new array about to save', cityStrArray);
-    localStorage.setItem("cityList", cityStrArray)
+    // var cityArray = oldList.concat([userInput])
+    // var cityStrArray = JSON.stringify(cityArray)
+    // console.log('new array about to save', cityStrArray);
+    // localStorage.setItem("cityList", cityStrArray)
 
 
     if (userInput != "") {
