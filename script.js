@@ -66,7 +66,7 @@ function weather() {
      
       $(".cityName").html("Location: " + wetherInfo.name + `<img src='http://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
       $(".weather").html(" Description : " + wetherInfo.weather[0].description);
-      $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
+      $(".tempature").html("Tempature: " + Math.floor( wetherInfo.main.temp) + "&#8457");
       $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
       $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
       
@@ -111,7 +111,7 @@ function weather() {
 
         $(".cityName").html("Location: " + wetherInfo.name + `<img src='http://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
         $(".weather").html(" Description : " + wetherInfo.weather[0].description);
-        $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
+        $(".tempature").html("Tempature: " + Math.floor(wetherInfo.main.temp)+ "&#8457");
         $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
         $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
         
@@ -134,31 +134,31 @@ function weather() {
         // Day one
         $("#date1").html(forecastInfo.list[5].dt_txt.slice(0, 10));
         $("#iconD1").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[5].weather[0].icon}.png'>`);
-        $("#tempD1").html("Tempature: " + forecastInfo.list[5].main.temp + "&#8457");
+        $("#tempD1").html("Tempature: " +Math.floor(forecastInfo.list[5].main.temp) + "&#8457");
         $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
 
         // Day two
         $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
         $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
-        $("#tempD2").html("Tempature: " + forecastInfo.list[8].main.temp + "&#8457");
+        $("#tempD2").html("Tempature: " + Math.floor(forecastInfo.list[8].main.temp) + "&#8457");
         $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
 
         // day three
         $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
         $("#iconD3").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
-        $("#tempD3").html("Tempature: " + forecastInfo.list[15].main.temp + "&#8457");
+        $("#tempD3").html("Tempature: " + Math.floor(forecastInfo.list[15].main.temp) + "&#8457");
         $("#humD3").html("Humidity: " + JSON.stringify(forecastInfo.list[15].main.humidity) + "%");
 
         // day four
         $("#date4").html(forecastInfo.list[23].dt_txt.slice(0, 10));
         $("#iconD4").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[23].weather[0].icon}.png'>`);
-        $("#tempD4").html("Tempature: " + forecastInfo.list[23].main.temp + "&#8457");
+        $("#tempD4").html("Tempature: " + Math.floor(forecastInfo.list[23].main.temp)  + "&#8457");
         $("#humD4").html("Humidity: " + JSON.stringify(forecastInfo.list[23].main.humidity) + "%");
 
         // day five
         $("#date5").html(forecastInfo.list[31].dt_txt.slice(0, 10));
         $("#iconD5").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[31].weather[0].icon}.png'>`);
-        $("#tempD5").html("Tempature: " + forecastInfo.list[31].main.temp + "&#8457");
+        $("#tempD5").html("Tempature: " + Math.floor(forecastInfo.list[31].main.temp) + "&#8457");
         $("#humD5").html("Humidity: " + JSON.stringify(forecastInfo.list[31].main.humidity) + "%");
 
 
@@ -177,7 +177,7 @@ function weather() {
   })
 
 
-  // search button funcrtion
+  // search button function
   $(btn).on("click", function (event) {
     event.preventDefault();
     // hiding the error box when the page load at the second time
@@ -196,6 +196,10 @@ function weather() {
 
       $("#currentWeatherBox").attr("style", "display:none");
       $("#result-box").attr("style", "display:block");
+      // clear the search box after serach Btn clikced
+      $("#userInput").val("");
+      var cityNameSearched =$("#userInput").val();
+      localStorage.setItem("Cityname",cityNameSearched);
 
       
 
@@ -209,7 +213,7 @@ function weather() {
 
           $(".cityName").html("Location: " + wetherInfo.name + `<img src='http://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
           $(".weather").html(" Description : " + wetherInfo.weather[0].description);
-          $(".tempature").html("Tempature: " + wetherInfo.main.temp + "&#8457");
+          $(".tempature").html("Tempature: " + Math.floor(wetherInfo.main.temp) + "&#8457");
           $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
           $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
           
@@ -233,31 +237,31 @@ function weather() {
           // Day one
           $("#date1").html(forecastInfo.list[5].dt_txt.slice(0, 10));
           $("#iconD1").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[5].weather[0].icon}.png'>`);
-          $("#tempD1").html("Tempature: " + forecastInfo.list[5].main.temp + "&#8457");
+          $("#tempD1").html("Tempature: " + Math.floor(forecastInfo.list[5].main.temp) + "&#8457");
           $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
 
           // Day two
           $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
           $("#iconD2").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
-          $("#tempD2").html("Tempature: " + forecastInfo.list[8].main.temp + "&#8457");
+          $("#tempD2").html("Tempature: " + Math.floor(forecastInfo.list[8].main.temp) + "&#8457");
           $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
 
           // day three
           $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
           $("#iconD3").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
-          $("#tempD3").html("Tempature: " + forecastInfo.list[15].main.temp + "&#8457");
+          $("#tempD3").html("Tempature: " + Math.floor(forecastInfo.list[15].main.temp) + "&#8457");
           $("#humD3").html("Humidity: " + JSON.stringify(forecastInfo.list[15].main.humidity) + "%");
 
           // day four
           $("#date4").html(forecastInfo.list[23].dt_txt.slice(0, 10));
           $("#iconD4").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[23].weather[0].icon}.png'>`);
-          $("#tempD4").html("Tempature: " + forecastInfo.list[23].main.temp + "&#8457");
+          $("#tempD4").html("Tempature: " + Math.floor(forecastInfo.list[23].main.temp) + "&#8457");
           $("#humD4").html("Humidity: " + JSON.stringify(forecastInfo.list[23].main.humidity) + "%");
 
           // day five
           $("#date5").html(forecastInfo.list[31].dt_txt.slice(0, 10));
           $("#iconD5").html(`<img src='http://openweathermap.org/img/w/${forecastInfo.list[31].weather[0].icon}.png'>`);
-          $("#tempD5").html("Tempature: " + forecastInfo.list[31].main.temp + "&#8457");
+          $("#tempD5").html("Tempature: " + Math.floor(forecastInfo.list[31].main.temp) + "&#8457");
           $("#humD5").html("Humidity: " + JSON.stringify(forecastInfo.list[31].main.humidity) + "%");
 
 
