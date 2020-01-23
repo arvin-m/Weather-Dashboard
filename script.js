@@ -6,8 +6,12 @@ var urlForcaste = "https://api.openweathermap.org/data/2.5/forecast?id=524901&AP
 var tempCel = "&units=metric";
 var tempFah = "&units=imperial";
 var input = $("#userInput");
-var btn = $("#searchBtn");
+var userInput = input.val();
+
+var searchBtn = $("#searchBtn");
 var localTime = moment().format('L');
+var citySearchedArr =[];
+var list =$(".cityList")
 
 // current Location API
 var latitude = 0;
@@ -52,10 +56,8 @@ function weather() {
 
 
 
+
   var CurrentUrlBase = "https://api.openweathermap.org/data/2.5/weather?appid=b650042e3a82aa70290734a60a8cb3e3&lat=" + latitude + "&lon=" + longitude + "&units=imperial";
-
-
-
  
 
   $.ajax({
@@ -94,14 +96,17 @@ function weather() {
 
 
   // city list sidebar
-  $(".cityList").click("click", function () {
+  $("#listBody").on("click",".cityList", function(event){
+    console.log("cliked");      
+    event.preventDefault();
     $("#currentWeatherBox").attr("style", "display:none");
     $("#result-box").attr("style", "display:block");
-    
-    
+   
 
 
     var cityName = $(this).text();
+    // citySearchedArr.push(cityName);
+    // console.log(citySearchedArr,"city Array");
 
     $.ajax({
       url: urlBaseCurrent + cityName + tempFah,
@@ -114,11 +119,6 @@ function weather() {
         $(".tempature").html("Tempature: " + Math.floor(wetherInfo.main.temp)+ "&#8457");
         $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
         $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
-        
-
-
-
-
       }
     });
 
@@ -174,33 +174,35 @@ function weather() {
 
 
 
-  })
+  });
+
+
 
 
   // search button function
-  $(btn).on("click", function (event) {
+  $(searchBtn).on("click", function (event) {
     event.preventDefault();
     // hiding the error box when the page load at the second time
     $("#errorMessage").attr("style", "display:none");
+     userInput = input.val();
 
-    // var oldList = JSON.parse(localStorage.getItem('cityList'))
-    // console.log('this is the old list!', oldList)
-    var userInput = input.val();
-    // var cityArray = oldList.concat([userInput])
-    // var cityStrArray = JSON.stringify(cityArray)
-    // console.log('new array about to save', cityStrArray);
-    // localStorage.setItem("cityList", cityStrArray)
-
-
+    
     if (userInput != "") {
 
       $("#currentWeatherBox").attr("style", "display:none");
       $("#result-box").attr("style", "display:block");
       // clear the search box after serach Btn clikced
       $("#userInput").val("");
-      var cityNameSearched =$("#userInput").val();
-      localStorage.setItem("Cityname",cityNameSearched);
+      
+      localStorage.setItem("Cityname",userInput);
+      citySearchedArr.push(userInput);
+      console.log(citySearchedArr);
 
+      createList();
+      
+      
+
+      
       
 
 
@@ -287,5 +289,18 @@ function weather() {
 
   });
 }
+
+function createList(){
+  console.log("input",userInput);
+  // var listContent=userInput;
+  
+  // console.log("userInput",listContent);
+  var newListItem =$("<li>").text(userInput);
+    newListItem.addClass("list-group-item cityList");
+    $("#listBody").append(newListItem);
+
+
+}
+
 
 
