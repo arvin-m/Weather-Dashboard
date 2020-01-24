@@ -19,6 +19,140 @@ var longitude = 0;
 
 
 
+reloadThePage();
+
+function reloadThePage(){
+  $("#errorMessage").attr("style", "display:none");
+  $("#result-box").attr("style", "display:block");
+ 
+  
+    var history = localStorage.getItem("Cityname");
+    
+    
+    
+
+    $.ajax({
+      url: urlBaseCurrent + history + tempFah,
+      type: "GET",
+
+      success: function (wetherInfo) {
+
+        $(".cityName").html("Location: " + wetherInfo.name + `<img src='https://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
+        $(".weather").html(" Description : " + wetherInfo.weather[0].description);
+        $(".tempature").html("Tempature: " + Math.floor(wetherInfo.main.temp) + "&#8457");
+        $(".humidity").html("Humidity: " + JSON.stringify(wetherInfo.main.humidity) + "%");
+        $(".wind").html("Wind speed : " + JSON.stringify(wetherInfo.wind.speed) + " m/s");
+
+
+        var cityLatitud = wetherInfo.coord.lat;
+        var cityLongitude = wetherInfo.coord.lon;
+        UVI(cityLatitud,cityLongitude);
+       
+        
+
+
+
+
+      }
+    });
+
+    
+  function UVI(lat,lon){
+    //  UVIndex Call
+$.ajax({
+url:"https://api.openweathermap.org/data/2.5/uvi?appid=b650042e3a82aa70290734a60a8cb3e3&lat="+lat+"&lon="+lon,
+type:"GET",
+success :function(uvIndexInfo){
+  
+  $(".uvIndex").html(uvIndexInfo.value);
+  var uvVal=uvIndexInfo.value;
+    
+  if(uvVal <3){
+    
+    $("#UV").attr("class","uvIndex badge badge-primary");
+  }else if(uvVal>3 && uvVal<5){
+    
+    $("#UV").attr("class","uvIndex badge badge-warning");
+
+  }  
+  
+  else{
+    
+    
+    $("#UV").attr("class","uvIndex badge badge-danger");
+
+  }
+
+  
+
+}
+})
+
+
+
+
+}
+
+   
+
+    // 5 day forcast ajax call
+    $.ajax({
+      url: urlForcaste + history + tempFah,
+      type: "GET",
+
+      success: function (forecastInfo) {
+
+
+        // Day one
+        $("#date1").html(forecastInfo.list[5].dt_txt.slice(0, 10));
+        $("#iconD1").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[5].weather[0].icon}.png'>`);
+        $("#tempD1").html("Tempature: " + Math.floor(forecastInfo.list[5].main.temp) + "&#8457");
+        $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
+
+        // Day two
+        $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
+        $("#iconD2").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
+        $("#tempD2").html("Tempature: " + Math.floor(forecastInfo.list[8].main.temp) + "&#8457");
+        $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
+
+        // day three
+        $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
+        $("#iconD3").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
+        $("#tempD3").html("Tempature: " + Math.floor(forecastInfo.list[15].main.temp) + "&#8457");
+        $("#humD3").html("Humidity: " + JSON.stringify(forecastInfo.list[15].main.humidity) + "%");
+
+        // day four
+        $("#date4").html(forecastInfo.list[23].dt_txt.slice(0, 10));
+        $("#iconD4").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[23].weather[0].icon}.png'>`);
+        $("#tempD4").html("Tempature: " + Math.floor(forecastInfo.list[23].main.temp) + "&#8457");
+        $("#humD4").html("Humidity: " + JSON.stringify(forecastInfo.list[23].main.humidity) + "%");
+
+        // day five
+        $("#date5").html(forecastInfo.list[31].dt_txt.slice(0, 10));
+        $("#iconD5").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[31].weather[0].icon}.png'>`);
+        $("#tempD5").html("Tempature: " + Math.floor(forecastInfo.list[31].main.temp) + "&#8457");
+        $("#humD5").html("Humidity: " + JSON.stringify(forecastInfo.list[31].main.humidity) + "%");
+
+
+
+
+
+
+
+      }
+    });
+
+
+
+
+  }
+  
+  
+
+
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 $("#currentBtn").on("click",function(){
   $("#errorMessage").attr("style", "display:none");
   // $("#result-box").attr("style", "display:block");
@@ -96,6 +230,23 @@ function weather() {
     success :function(uvIndexInfo){
       
       $(".uvIndex").html(uvIndexInfo.value);
+      var uvVal=uvIndexInfo.value;
+    
+    if(uvVal <3){
+      
+      $("#UV").attr("class","uvIndex badge badge-primary");
+    }else if(uvVal>3 && uvVal<5){
+      
+      $("#UV").attr("class","uvIndex badge badge-warning");
+
+    }  
+    
+    else{
+      
+      
+      $("#UV").attr("class","uvIndex badge badge-danger");
+
+    }
 
       
 
@@ -151,10 +302,10 @@ function weather() {
 };
 
 
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // city list sidebar function call
   $("#listBody").on("click",".cityList", function(event){
-    console.log("cliked");      
+         
     event.preventDefault();
     // $("#currentWeatherBox").attr("style", "display:none");
     $("#result-box").attr("style", "display:block");
@@ -162,8 +313,7 @@ function weather() {
 
 
     var cityName = $(this).text();
-    // var cityLatitud =0;
-    // var cityLongitude =0;
+   
     
 
     $.ajax({
@@ -171,7 +321,7 @@ function weather() {
       type: "GET",
 
       success: function (wetherInfo) {
-        console.log(wetherInfo)
+       
 
         $(".cityName").html("Location: " + wetherInfo.name + `<img src='https://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
         $(".weather").html(" Description : " + wetherInfo.weather[0].description);
@@ -182,8 +332,7 @@ function weather() {
          var cityLatitud = wetherInfo.coord.lat;
          var cityLongitude = wetherInfo.coord.lon;
          UVI(cityLatitud,cityLongitude);
-        // console.log(cityLatitud);
-        // console.log(cityLongitude);
+        
       }
     });
     
@@ -196,6 +345,23 @@ function weather() {
     success :function(uvIndexInfo){
       
       $(".uvIndex").html(uvIndexInfo.value);
+      var uvVal=uvIndexInfo.value;
+    
+    if(uvVal <3){
+      $("#UV").removeClass("uvIndex badge badge-secondary");
+      $("#UV").addClass("uvIndex badge badge-primary");
+    }else if(uvVal>3 && uvVal<5){
+      $("#UV").removeClass("uvIndex badge badge-secondary");
+      $("#UV").addClass("uvIndex badge badge-warning");
+
+    }  
+    
+    else{
+      $("#UV").removeClass("uvIndex badge badge-secondary");
+      
+      $("#UV").addClass("uvIndex badge badge-danger");
+
+    }
 
       
 
@@ -267,7 +433,7 @@ function weather() {
 
 
 
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // search button function
   $(searchBtn).on("click", function (event) {
     event.preventDefault();
@@ -285,7 +451,8 @@ function weather() {
       
       localStorage.setItem("Cityname",userInput);
       citySearchedArr.push(userInput);
-      console.log(citySearchedArr);
+      localStorage.setItem("historyOfCity",citySearchedArr);
+      
 
       createList();
       
@@ -312,6 +479,7 @@ function weather() {
           var cityLatitud = wetherInfo.coord.lat;
           var cityLongitude = wetherInfo.coord.lon;
           UVI(cityLatitud,cityLongitude);
+
           
 
 
@@ -329,6 +497,23 @@ function weather() {
   success :function(uvIndexInfo){
     
     $(".uvIndex").html(uvIndexInfo.value);
+    var uvVal=uvIndexInfo.value;
+    
+    if(uvVal <3){
+      
+      $("#UV").attr("class","uvIndex badge badge-primary");
+    }else if(uvVal>3 && uvVal<5){
+      
+      $("#UV").attr("class","uvIndex badge badge-warning");
+
+    }  
+    
+    else{
+      
+      
+      $("#UV").attr("class","uvIndex badge badge-danger");
+
+    }
 
     
 
@@ -403,12 +588,12 @@ function weather() {
 
   });
 
-
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function createList(){
   console.log("input",userInput);
-  // var listContent=userInput;
   
-  // console.log("userInput",listContent);
+  
+  
   var newListItem =$("<li>").text(userInput);
     newListItem.addClass("list-group-item cityList");
     $("#listBody").append(newListItem);
