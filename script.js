@@ -10,17 +10,20 @@ var userInput = input.val();
 
 var searchBtn = $("#searchBtn");
 var localTime = moment().format('L');
-var citySearchedArr =[localStorage.getItem("historyOfCity",JSON.stringify(citySearchedArr))];
+// var citySearchedArr =[localStorage.getItem("historyOfCity",JSON.stringify(citySearchedArr))];
 var list =$(".cityList")
 
 // current Location API
 var latitude = 0;
 var longitude = 0;
+var currentSerches =JSON.parse(localStorage.getItem("searchHistory"));
 
-if(citySearchedArr.length > 0 ){
+if(currentSerches ){
   reloadThePage();
 
 
+}else{
+  $("#result-box").attr("style", "display:none");
 }
 
 
@@ -30,13 +33,13 @@ function reloadThePage(){
   $("#result-box").attr("style", "display:block");
  
   
-    var history = localStorage.getItem("Cityname");
+    var history = JSON.parse(localStorage.getItem("searchHistory"));
     
     
     
 
     $.ajax({
-      url: urlBaseCurrent + history + tempFah,
+      url: urlBaseCurrent + history[history.length -1] + tempFah,
       type: "GET",
 
       success: function (wetherInfo) {
@@ -212,6 +215,7 @@ function weather() {
     type: "GET",
 
     success: function (wetherInfo) {
+      handelLocalStorage(wetherInfo.name);
      
       $(".cityName").html("Location: " + wetherInfo.name + `<img src='https://openweathermap.org/img/w/${wetherInfo.weather[0].icon}.png'>` + "(" + localTime + ")");
       $(".weather").html(" Description : " + wetherInfo.weather[0].description);
@@ -317,6 +321,8 @@ function weather() {
 
 
     var cityName = $(this).text();
+    handelLocalStorage(cityName);
+    // localStorage.setItem("Cityname",cityName);
    
     
 
@@ -436,7 +442,34 @@ function weather() {
   });
 
 
+function handelLocalStorage(userInput){
+  var currentSerches =JSON.parse(localStorage.getItem("searchHistory"));
+      console.log("currentSearch",currentSerches);
+      if(currentSerches){
+        console.log("Inside The If");
+        currentSerches.push(userInput);
+        var strCurrentSerches =JSON.stringify(currentSerches);
+        console.log("about to updatelocalsotrage",strCurrentSerches)
+        localStorage.setItem("searchHistory",strCurrentSerches);
 
+      }else{
+
+        console.log("Inside The else")
+        var cityArray = [userInput];
+        var strArray =JSON.stringify(cityArray);
+        localStorage.setItem("searchHistory",strArray);
+
+      }
+
+
+
+
+
+
+
+
+
+}
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
   // search button function
   $(searchBtn).on("click", function (event) {
@@ -444,19 +477,36 @@ function weather() {
     // hiding the error box when the page load at the second time
     $("#errorMessage").attr("style", "display:none");
      userInput = input.val();
-
-    
-    if (userInput != "") {
+     
+     
+     if (userInput != "") {
+      handelLocalStorage(userInput);
+      // hiding the error box when the page load at the second time
+    $("#errorMessage").attr("style", "display:none");
+    userInput = input.val();
+    handelLocalStorage(userInput);
 
       $("#currentWeatherBox").attr("style", "display:none");
       $("#result-box").attr("style", "display:block");
       // clear the search box after serach Btn clikced
       $("#userInput").val("");
       
-      localStorage.setItem("Cityname",userInput);
-      citySearchedArr.push(userInput);
-      localStorage.setItem("historyOfCity",citySearchedArr);
-      console.log(citySearchedArr);
+
+
+
+
+
+      
+
+
+
+
+
+      
+    //  localStorage.setItem("Cityname",userInput);
+      // citySearchedArr.push(userInput);
+      // localStorage.setItem("historyOfCity",citySearchedArr);
+      // console.log(citySearchedArr);
       
 
       createList();
@@ -595,7 +645,7 @@ function weather() {
 
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function createList(){
-  console.log("input",userInput);
+  // console.log("input",userInput);
   
   
   
