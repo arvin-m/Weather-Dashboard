@@ -10,16 +10,20 @@ var userInput = input.val();
 
 var searchBtn = $("#searchBtn");
 var localTime = moment().format('L');
-var citySearchedArr =[];
+var citySearchedArr =[localStorage.getItem("historyOfCity",JSON.stringify(citySearchedArr))];
 var list =$(".cityList")
 
 // current Location API
 var latitude = 0;
 var longitude = 0;
 
+if(citySearchedArr.length > 0 ){
+  reloadThePage();
 
 
-reloadThePage();
+}
+
+
 
 function reloadThePage(){
   $("#errorMessage").attr("style", "display:none");
@@ -452,6 +456,7 @@ function weather() {
       localStorage.setItem("Cityname",userInput);
       citySearchedArr.push(userInput);
       localStorage.setItem("historyOfCity",citySearchedArr);
+      console.log(citySearchedArr);
       
 
       createList();

@@ -1,7 +1,10 @@
 # Weather-Dashboard
 
  I build a weather dashboard application with search functionality to find current weather conditions and the future weather outlook for multiple cities.
- And also this application has access to your current location if you allow the browser to use your current location,and gave your current location weather information.
+ And also this application has access to your current location. if you allow the browser to use your current location,it's shows your current location weather information.
+  This application include a search history so that users can access their past search terms.also include a 5-Day Forecast below the current weather conditions.
+
+ [App Link](https://arvin-m.github.io/Weather-Dashboard/)
 
  ##List of API's use in this application 
  *[OpenWeather API](https://openweathermap.org/api)
