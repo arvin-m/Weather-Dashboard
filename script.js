@@ -205,25 +205,25 @@ function GetingForcat(city) {
       $("#humD1").html("Humidity: " + JSON.stringify(forecastInfo.list[5].main.humidity) + "%");
 
       // Day two
-      $("#date2").html(forecastInfo.list[8].dt_txt.slice(0, 10));
+      $("#date2").html(forecastInfo.list[12].dt_txt.slice(0, 10));
       $("#iconD2").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[8].weather[0].icon}.png'>`);
       $("#tempD2").html("Tempature: " + Math.floor(forecastInfo.list[8].main.temp) + "&#8457");
       $("#humD2").html("Humidity: " + JSON.stringify(forecastInfo.list[8].main.humidity) + "%");
 
       // day three
-      $("#date3").html(forecastInfo.list[15].dt_txt.slice(0, 10));
+      $("#date3").html(forecastInfo.list[20].dt_txt.slice(0, 10));
       $("#iconD3").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[7].weather[0].icon}.png'>`);
       $("#tempD3").html("Tempature: " + Math.floor(forecastInfo.list[15].main.temp) + "&#8457");
       $("#humD3").html("Humidity: " + JSON.stringify(forecastInfo.list[15].main.humidity) + "%");
 
       // day four
-      $("#date4").html(forecastInfo.list[23].dt_txt.slice(0, 10));
+      $("#date4").html(forecastInfo.list[30].dt_txt.slice(0, 10));
       $("#iconD4").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[23].weather[0].icon}.png'>`);
       $("#tempD4").html("Tempature: " + Math.floor(forecastInfo.list[23].main.temp) + "&#8457");
       $("#humD4").html("Humidity: " + JSON.stringify(forecastInfo.list[23].main.humidity) + "%");
 
       // day five
-      $("#date5").html(forecastInfo.list[31].dt_txt.slice(0, 10));
+      $("#date5").html(forecastInfo.list[39].dt_txt.slice(0, 10));
       $("#iconD5").html(`<img src='https://openweathermap.org/img/w/${forecastInfo.list[31].weather[0].icon}.png'>`);
       $("#tempD5").html("Tempature: " + Math.floor(forecastInfo.list[31].main.temp) + "&#8457");
       $("#humD5").html("Humidity: " + JSON.stringify(forecastInfo.list[31].main.humidity) + "%");
